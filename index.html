@@ -230,24 +230,87 @@
                 <div class="h-1 w-12 bg-ln-neon"></div>
             </div>
 
-            <!-- About Box (Racing Card Style) -->
-            <div
-                class="max-w-4xl mx-auto bg-ln-gray border-l-4 border-ln-neon p-8 relative skew-box hover:translate-x-2 transition-transform duration-300">
-                <div class="unskew-content">
-                    <h2 class="text-3xl font-black mb-4 text-white uppercase italic" data-i18n="quote">"Code Fast. Solve
-                        Problems."</h2>
-                    <p class="text-gray-300 text-lg leading-relaxed font-light border-t border-gray-700 pt-4">
-                        <span data-i18n="bio_start">Transformando ideias complexas em soluções de alto desempenho.
-                            Especialista em construir a ponte entre</span>
-                        <span class="text-ln-neon font-bold" data-i18n="ai_highlight">Inteligência Artificial</span>
-                        <span data-i18n="bio_end">e experiências web intuitivas. Foco total em performance e
-                            impacto.</span>
-                    </p>
+            <!-- About Section (Horizontal Scrollytelling) -->
+            <section id="about-section" class="relative overflow-hidden z-20">
+                <div class="pin-wrap-sticky h-screen flex items-center overflow-hidden sticky top-0">
+                    <div class="animation-wrap-about flex relative h-full items-center pl-[10vw]">
+
+                        <!-- Card 1: Intro / Quote -->
+                        <div
+                            class="about-card flex-shrink-0 w-[85vw] md:w-[60vw] h-[70vh] bg-ln-gray border-l-4 border-ln-neon p-8 md:p-12 mr-[5vw] skew-box relative">
+                            <div class="unskew-content flex flex-col justify-center h-full">
+                                <span class="text-ln-neon font-mono text-xl mb-4 block">01 // INTRO</span>
+                                <h2 class="text-5xl md:text-7xl font-black mb-8 text-white uppercase italic"
+                                    data-i18n="quote">"Code Fast. Solve Problems."</h2>
+                                <p
+                                    class="text-gray-300 text-xl md:text-2xl leading-relaxed font-light border-t border-gray-700 pt-8">
+                                    <span data-i18n="bio_start">Transformando ideias complexas em soluções de alto
+                                        desempenho. Especialista em construir a ponte entre</span>
+                                    <span class="text-ln-neon font-bold" data-i18n="ai_highlight">Inteligência
+                                        Artificial</span>
+                                    <span data-i18n="bio_end">e experiências web intuitivas.</span>
+                                </p>
+                            </div>
+                            <!-- Decorative -->
+                            <div class="absolute top-0 right-0 w-16 h-16 border-t-4 border-r-4 border-white/10"></div>
+                            <div class="absolute bottom-0 left-0 w-16 h-16 border-b-4 border-l-4 border-white/10"></div>
+                        </div>
+
+                        <!-- Card 2: Stats & Age -->
+                        <div
+                            class="about-card flex-shrink-0 w-[85vw] md:w-[50vw] h-[70vh] bg-black border border-gray-800 p-8 md:p-12 mr-[5vw] skew-box relative group neon-border">
+                            <div class="unskew-content h-full flex flex-col justify-center">
+                                <span class="text-ln-neon font-mono text-xl mb-8 block">02 // STATS</span>
+
+                                <div class="grid grid-cols-1 gap-12">
+                                    <!-- Age -->
+                                    <div>
+                                        <h3 class="text-gray-500 text-sm font-bold uppercase tracking-widest mb-2"
+                                            data-i18n="stats_age">Age</h3>
+                                        <div class="text-6xl md:text-8xl font-black text-white flex items-baseline">
+                                            22
+                                            <span class="text-ln-neon text-2xl ml-2">YO</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Location -->
+                                    <div>
+                                        <h3 class="text-gray-500 text-sm font-bold uppercase tracking-widest mb-2"
+                                            data-i18n="stats_loc">Location</h3>
+                                        <div class="text-4xl md:text-5xl font-bold text-white uppercase"
+                                            data-i18n="stats_loc_val">Brazil</div>
+                                    </div>
+
+                                    <!-- Experience -->
+                                    <div>
+                                        <h3 class="text-gray-500 text-sm font-bold uppercase tracking-widest mb-2"
+                                            data-i18n="stats_exp">Experience</h3>
+                                        <div class="text-4xl md:text-5xl font-bold text-white uppercase"
+                                            data-i18n="stats_exp_val">Full Stack</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Card 3: Philosophy -->
+                        <div
+                            class="about-card flex-shrink-0 w-[85vw] md:w-[60vw] h-[70vh] bg-ln-neon text-black p-8 md:p-12 mr-[20vw] skew-box relative">
+                            <div class="unskew-content h-full flex flex-col justify-center">
+                                <span class="text-black font-mono text-xl mb-4 block opacity-70"
+                                    data-i18n="philosophy_label">03 // PHILOSOPHY</span>
+                                <h2 class="text-5xl md:text-7xl font-black mb-8 uppercase italic"
+                                    data-i18n="philosophy_title">Built for Speed</h2>
+                                <p class="text-black text-xl md:text-2xl leading-relaxed font-medium border-t border-black pt-8 border-opacity-30"
+                                    data-i18n="philosophy_desc">
+                                    Não crio apenas sites, crio máquinas de performance. Foco obcecado em UX,
+                                    acessibilidade e código limpo.
+                                </p>
+                            </div>
+                        </div>
+
+                    </div>
                 </div>
-                <!-- Decorative corner -->
-                <div class="absolute top-0 right-0 w-8 h-8 border-t-2 border-r-2 border-white/20"></div>
-                <div class="absolute bottom-0 left-0 w-8 h-8 border-b-2 border-l-2 border-white/20"></div>
-            </div>
+            </section>
 
         </section>
 
@@ -268,7 +331,8 @@
                     <button onclick="openTech('tailwind')"
                         class="text-xl md:text-2xl font-bold border-2 border-black px-6 py-2 hover:bg-black hover:text-ln-neon transition-colors cursor-pointer active:scale-95 transform duration-100">TailwindCSS</button>
                 </div>
-                <p class="mt-4 text-xs font-bold uppercase tracking-widest opacity-60">(Click to view details)</p>
+                <p class="mt-4 text-xs font-bold uppercase tracking-widest opacity-60" data-i18n="click_details">(Click
+                    to view details)</p>
             </div>
         </section>
 
@@ -367,7 +431,8 @@
                                 d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"
                                 clip-rule="evenodd"></path>
                         </svg>
-                        <span class="text-2xl font-black text-black uppercase tracking-tighter">GitHub</span>
+                        <span class="text-2xl font-black text-black uppercase tracking-tighter"
+                            data-i18n="github">GitHub</span>
                     </div>
                     <div class="unskew-content">
                         <svg class="w-8 h-8 text-black group-hover:translate-x-2 transition-transform" fill="none"
@@ -387,7 +452,8 @@
                                 d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"
                                 clip-rule="evenodd"></path>
                         </svg>
-                        <span class="text-2xl font-black text-black uppercase tracking-tighter">LinkedIn</span>
+                        <span class="text-2xl font-black text-black uppercase tracking-tighter"
+                            data-i18n="linkedin">LinkedIn</span>
                     </div>
                     <div class="unskew-content">
                         <svg class="w-8 h-8 text-black group-hover:translate-x-2 transition-transform" fill="none"
@@ -402,7 +468,8 @@
             <h2
                 class="text-[12vw] leading-none font-black text-gray-900 absolute left-1/2 -translate-x-1/2 bottom-0 pointer-events-none select-none">
                 ENZZO</h2>
-            <p class="text-gray-600 text-xs font-mono relative z-10">© 2026 ENZZO GOMES. ALL RIGHTS RESERVED.</p>
+            <p class="text-gray-600 text-xs font-mono relative z-10" data-i18n="rights">© 2026 ENZZO GOMES. ALL RIGHTS
+                RESERVED.</p>
         </footer>
     </div>
 
@@ -460,61 +527,72 @@
         // HORIZONTAL SCROLL (SCROLLTELLING)
         // ------------------------------------------------------------------
         // ------------------------------------------------------------------
-        // HORIZONTAL SCROLL (SCROLLTELLING) - ROBUST FIX
+        // HORIZONTAL SCROLL ENGINE (Generic)
         // ------------------------------------------------------------------
         function initHorizontalScroll() {
-            const races = document.querySelector(".animation-wrap");
-            const section = document.getElementById("projects-section");
-            const stickyWrap = document.querySelector(".pin-wrap-sticky");
+            // Define all horizontal sections here
+            const sections = [
+                {
+                    id: "#projects-section",
+                    wrap: ".animation-wrap",
+                    pin: ".pin-wrap-sticky" // This might be tricky if classes are same. Better to target children.
+                },
+                {
+                    id: "#about-section",
+                    wrap: ".animation-wrap-about",
+                    pin: "#about-section .pin-wrap-sticky"
+                }
+            ];
 
-            if (!races || !section || !stickyWrap) return;
+            sections.forEach(config => {
+                const section = document.querySelector(config.id);
+                // Find inner elements scoped to this section
+                const races = section ? section.querySelector(config.wrap) : null;
+                const stickyWrap = section ? section.querySelector(".pin-wrap-sticky") : null;
 
-            // Force cleanup of old triggers if any
-            ScrollTrigger.getAll().forEach(t => {
-                if (t.trigger === section || t.pin === stickyWrap) t.kill();
-            });
+                if (!races || !section || !stickyWrap) return;
 
-            // Remove CSS sticky to let GSAP handle pinning completely
-            stickyWrap.classList.remove('sticky', 'top-0');
-            stickyWrap.style.width = '100vw'; // Ensure full width
-            stickyWrap.style.height = '100vh';
+                // Force cleanup
+                ScrollTrigger.getAll().forEach(t => {
+                    if (t.trigger === section || t.pin === stickyWrap) t.kill();
+                });
 
-            // Ensure content doesn't wrap
-            races.style.width = 'max-content';
+                // Reset styles for GSAP control
+                stickyWrap.classList.remove('sticky', 'top-0');
+                stickyWrap.style.width = '100vw';
+                stickyWrap.style.height = '100vh';
+                races.style.width = 'max-content';
 
-            function getScrollAmount() {
-                let racesWidth = races.scrollWidth;
-                return -(racesWidth - window.innerWidth);
-            }
+                function getScrollAmount() {
+                    let racesWidth = races.scrollWidth;
+                    return -(racesWidth - window.innerWidth);
+                }
 
-            const tween = gsap.to(races, {
-                x: getScrollAmount,
-                ease: "none"
-            });
+                const tween = gsap.to(races, {
+                    x: getScrollAmount,
+                    ease: "none"
+                });
 
-            ScrollTrigger.create({
-                trigger: "#projects-section",
-                start: "top top",
-                // Exact distance needed to scroll to the end
-                end: () => `+=${races.scrollWidth - window.innerWidth}`,
-                pin: stickyWrap,
-                animation: tween,
-                scrub: 1, // Smooth scrubbing
-                invalidateOnRefresh: true,
-                anticipatePin: 1
+                ScrollTrigger.create({
+                    trigger: config.id,
+                    start: "top top",
+                    end: () => `+=${races.scrollWidth - window.innerWidth}`,
+                    pin: stickyWrap,
+                    animation: tween,
+                    scrub: 1,
+                    invalidateOnRefresh: true,
+                    anticipatePin: 1
+                });
             });
         }
 
-        // Initialize on load to ensure correct dimensions (images/fonts loaded)
+        // Initialize on load
         window.addEventListener('load', () => {
             initHorizontalScroll();
             ScrollTrigger.refresh();
         });
 
-        // Fail-safe: also run immediately in case load already happened
-        if (document.readyState === 'complete') {
-            initHorizontalScroll();
-        }
+        if (document.readyState === 'complete') initHorizontalScroll();
 
         // ------------------------------------------------------------------
         // REVEAL ANIMATIONS (GSAP BATCH)
@@ -553,7 +631,25 @@
                 bio_start: "Transformando ideias complexas em soluções de alto desempenho. Especialista em construir a ponte entre",
                 ai_highlight: "Inteligência Artificial",
                 bio_end: "e experiências web intuitivas. Foco total em performance e impacto.",
+
+                // Stats
+                stats_age: "IDADE",
+                stats_age_label: "IDADE",
+                stats_loc: "LOCALIZAÇÃO",
+                stats_loc_val: "BRASIL",
+                stats_exp: "EXPERIÊNCIA",
+                stats_exp_val: "FULL STACK",
+
+                // Philosophy
+                philosophy_label: "03 // FILOSOFIA",
+                philosophy_title: "CONSTRUÍDO P/ VELOCIDADE",
+                philosophy_desc: "Não crio apenas sites, crio máquinas de performance. Foco obcecado em UX, acessibilidade e código limpo.",
+
+                // Tech Section
                 tech_stack: "Tech Stack",
+                click_details: "(CLIQUE PARA VER DETALHES)",
+
+                // Projects
                 selected: "Projetos",
                 work: "Selecionados",
                 p1_cat: "IA / EDUCAÇÃO",
@@ -562,7 +658,12 @@
                 p3_cat: "APLICAÇÃO WEB",
                 p3_title: "Projeto App",
                 p3_desc: "Estrutura de app web focada em UX e organização de dados.",
-                view_project: "Ver Projeto"
+                view_project: "Ver Projeto",
+
+                // Footer
+                rights: "© 2026 ENZZO GOMES. TODOS OS DIREITOS RESERVADOS.",
+                github: "GITHUB",
+                linkedin: "LINKEDIN"
             },
             en: {
                 page_title: "Portfolio | Enzzo Gomes",
@@ -571,7 +672,25 @@
                 bio_start: "Transforming complex ideas into high-performance solutions. Specialist in bridging the gap between",
                 ai_highlight: "Artificial Intelligence",
                 bio_end: "and intuitive web experiences. Total focus on performance and impact.",
+
+                // Stats
+                stats_age: "AGE",
+                stats_age_label: "AGE",
+                stats_loc: "LOCATION",
+                stats_loc_val: "BRAZIL",
+                stats_exp: "EXPERIENCE",
+                stats_exp_val: "FULL STACK",
+
+                // Philosophy
+                philosophy_label: "03 // PHILOSOPHY",
+                philosophy_title: "BUILT FOR SPEED",
+                philosophy_desc: "I don't just build websites, I build performance machines. Obsessed with UX, accessibility, and clean code.",
+
+                // Tech Section
                 tech_stack: "Tech Stack",
+                click_details: "(CLICK TO VIEW DETAILS)",
+
+                // Projects
                 selected: "Selected",
                 work: "Work",
                 p1_cat: "AI / EDUCATION",
@@ -580,7 +699,12 @@
                 p3_cat: "WEB APPLICATION",
                 p3_title: "Project App",
                 p3_desc: "Web app structure focused on UX and data organization.",
-                view_project: "View Project"
+                view_project: "View Project",
+
+                // Footer
+                rights: "© 2026 ENZZO GOMES. ALL RIGHTS RESERVED.",
+                github: "GITHUB",
+                linkedin: "LINKEDIN"
             }
         };
 
