@@ -256,19 +256,66 @@
 
     const terminalScript = {
         pt: [
-            { cmd: 'whoami', out: '<strong>Enzzo Gomes</strong> — estudante de Ciência de Dados e IA na Uniso.' },
-            { cmd: 'cat objetivo.txt', out: 'Consolidar o domínio em IA e automação, com ética e responsabilidade no desenvolvimento de modelos. Quero integrar times de dados e converter desafios operacionais em fluxos automatizados e insights estratégicos.' },
-            { cmd: 'ls skills/', out: 'python/  sql/  power-bi/  tableau/  r/  java/  openai-api/' },
-            { cmd: 'cat experiencia.txt', out: 'Suporte a áreas financeiras e operacionais com SQL, Python e BI — automações e relatórios que geram clareza e eficiência.' },
-            { cmd: 'cat filosofia.txt', out: 'Tecnologia tem que ser <strong>prática e ética</strong>. Dados brutos só valem quando viram decisão.' }
+            { cmd: 'whoami', note: 'quem sou eu', out: '<strong>Enzzo Gomes</strong> — estudante de Ciência de Dados e IA na Uniso.' },
+            { cmd: 'cat objetivo.txt', note: 'meu objetivo profissional', out: 'Consolidar o domínio em IA e automação, com ética e responsabilidade no desenvolvimento de modelos. Quero integrar times de dados e converter desafios operacionais em fluxos automatizados e insights estratégicos.' },
+            { cmd: 'ls skills/', note: 'o que eu uso no dia a dia', out: 'python/  sql/  power-bi/  tableau/  r/  java/  openai-api/' },
+            { cmd: 'cat experiencia.txt', note: 'minha experiência', out: 'Suporte a áreas financeiras e operacionais com SQL, Python e BI — automações e relatórios que geram clareza e eficiência.' }
         ],
         en: [
-            { cmd: 'whoami', out: '<strong>Enzzo Gomes</strong> — Data Science & AI student at Uniso.' },
-            { cmd: 'cat goal.txt', out: 'Master AI and automation with ethics and responsibility in model development. I want to join data teams and turn operational challenges into automated workflows and strategic insights.' },
-            { cmd: 'ls skills/', out: 'python/  sql/  power-bi/  tableau/  r/  java/  openai-api/' },
-            { cmd: 'cat experience.txt', out: 'Supporting finance and operations with SQL, Python and BI — automations and reports that bring clarity and efficiency.' },
-            { cmd: 'cat philosophy.txt', out: 'Technology must be <strong>practical and ethical</strong>. Raw data only matters once it becomes a decision.' }
+            { cmd: 'whoami', note: 'who I am', out: '<strong>Enzzo Gomes</strong> — Data Science & AI student at Uniso.' },
+            { cmd: 'cat goal.txt', note: 'my career goal', out: 'Master AI and automation with ethics and responsibility in model development. I want to join data teams and turn operational challenges into automated workflows and strategic insights.' },
+            { cmd: 'ls skills/', note: 'what I use every day', out: 'python/  sql/  power-bi/  tableau/  r/  java/  openai-api/' },
+            { cmd: 'cat experience.txt', note: 'my experience', out: 'Supporting finance and operations with SQL, Python and BI — automations and reports that bring clarity and efficiency.' }
         ]
+    };
+
+    const termText = {
+        pt: {
+            hint: 'Sua vez: digite <strong>ajuda</strong> e aperte Enter.',
+            placeholder: 'digite um comando…',
+            help: [
+                ['ajuda', 'mostra esta lista'],
+                ['sobre', 'quem eu sou'],
+                ['objetivo', 'meu objetivo profissional'],
+                ['skills', 'tecnologias que eu uso'],
+                ['experiencia', 'minha experiência'],
+                ['projetos', 'lista os projetos'],
+                ['abrir &lt;número&gt;', 'abre um projeto (ex.: abrir 3)'],
+                ['contato', 'meus links'],
+                ['github', 'abre meu GitHub'],
+                ['linkedin', 'abre meu LinkedIn'],
+                ['curriculo', 'abre meu currículo (PDF)'],
+                ['limpar', 'limpa o terminal']
+            ],
+            notFound: (c) => `comando não encontrado: <strong>${c}</strong> — digite <strong>ajuda</strong>`,
+            opening: (x) => `abrindo ${x}…`,
+            badProject: 'número inválido — digite <strong>projetos</strong> para ver a lista',
+            sudo: 'boa tentativa 😄 aqui só o Enzzo tem permissão de administrador.',
+            hello: 'Olá! Que bom ter você por aqui. Digite <strong>contato</strong> pra falar comigo.'
+        },
+        en: {
+            hint: 'Your turn: type <strong>help</strong> and press Enter.',
+            placeholder: 'type a command…',
+            help: [
+                ['help', 'shows this list'],
+                ['about', 'who I am'],
+                ['goal', 'my career goal'],
+                ['skills', 'technologies I use'],
+                ['experience', 'my experience'],
+                ['projects', 'lists the projects'],
+                ['open &lt;number&gt;', 'opens a project (e.g. open 3)'],
+                ['contact', 'my links'],
+                ['github', 'opens my GitHub'],
+                ['linkedin', 'opens my LinkedIn'],
+                ['resume', 'opens my resume (PDF)'],
+                ['clear', 'clears the terminal']
+            ],
+            notFound: (c) => `command not found: <strong>${c}</strong> — type <strong>help</strong>`,
+            opening: (x) => `opening ${x}…`,
+            badProject: 'invalid number — type <strong>projects</strong> to see the list',
+            sudo: 'nice try 😄 only Enzzo has admin rights here.',
+            hello: 'Hi! Glad to have you here. Type <strong>contact</strong> to reach me.'
+        }
     };
 
     const t = (key) => (i18n[lang] && i18n[lang][key]) || i18n.pt[key] || key;
@@ -805,18 +852,142 @@ ${preview}
     }
 
     // ------------------------------------------------------------------
-    // TERMINAL (digitando)
+    // TERMINAL (digita sozinho e depois fica interativo)
     // ------------------------------------------------------------------
     const term = $('#terminal');
     let termRun = 0;
     let termState = 'idle'; // idle | typing | done
+    const termHistory = [];
+    let historyPos = 0;
+
+    const escapeHtml = (str) => str.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+
+    function cmdLine(cmd, note) {
+        return `<span class="prompt">$</span> ${escapeHtml(cmd)}${note ? `<span class="term-note"># ${note}</span>` : ''}`;
+    }
+
+    function printLine(html, cls = 'term-out') {
+        const line = document.createElement('p');
+        line.className = `term-line ${cls}`;
+        line.innerHTML = html;
+        const input = $('.term-input', term);
+        term.insertBefore(line, input || null);
+        return line;
+    }
+
+    function scrollTerm() {
+        term.scrollTop = term.scrollHeight;
+    }
+
+    function addInput() {
+        if (!term || $('.term-input', term)) return;
+        printLine(termText[lang].hint, 'term-hint');
+        const row = document.createElement('label');
+        row.className = 'term-line term-cmd term-input';
+        row.innerHTML = `<span class="prompt">$</span><input type="text" class="term-field mono" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Terminal" placeholder="${termText[lang].placeholder}">`;
+        term.appendChild(row);
+        const field = $('.term-field', row);
+        field.addEventListener('keydown', onTermKey);
+        termState = 'done';
+    }
+
+    function onTermKey(e) {
+        const field = e.currentTarget;
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            const value = field.value.trim();
+            field.value = '';
+            if (!value) return;
+            termHistory.push(value);
+            historyPos = termHistory.length;
+            printLine(cmdLine(value), 'term-cmd');
+            runCommand(value);
+            scrollTerm();
+        } else if (e.key === 'ArrowUp' && termHistory.length) {
+            e.preventDefault();
+            historyPos = Math.max(0, historyPos - 1);
+            field.value = termHistory[historyPos];
+        } else if (e.key === 'ArrowDown' && termHistory.length) {
+            e.preventDefault();
+            historyPos = Math.min(termHistory.length, historyPos + 1);
+            field.value = termHistory[historyPos] || '';
+        } else if (e.key === 'l' && e.ctrlKey) {
+            e.preventDefault();
+            runCommand('limpar');
+        }
+    }
+
+    function openLink(url, label) {
+        printLine(termText[lang].opening(label));
+        window.open(url, '_blank', 'noopener');
+    }
+
+    function runCommand(raw) {
+        const T = termText[lang];
+        const S = terminalScript[lang];
+        const parts = raw.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').split(/\s+/);
+        const cmd = parts[0];
+        const arg = parts.slice(1).join(' ');
+
+        switch (cmd) {
+            case 'ajuda': case 'help': case '?':
+                printLine(T.help.map(([c, d]) => `<span class="term-key">${c}</span><span class="term-desc">${d}</span>`).join('<br>'), 'term-out term-help');
+                break;
+            case 'sobre': case 'about': case 'whoami': case 'quem':
+                printLine(S[0].out);
+                break;
+            case 'objetivo': case 'goal':
+                printLine(S[1].out);
+                break;
+            case 'skills': case 'stack': case 'ls':
+                printLine(S[2].out);
+                break;
+            case 'experiencia': case 'experience':
+                printLine(S[3].out);
+                break;
+            case 'projetos': case 'projects':
+                printLine(projects.map((x, i) => `<span class="term-num">${i + 1}</span>${x.title[lang]} <span class="term-desc">${x.type[lang]}</span>`).join('<br>'));
+                break;
+            case 'abrir': case 'open': {
+                const n = parseInt(arg, 10);
+                const proj = projects[n - 1] || projects.find((x) => x.id === arg);
+                if (!proj) { printLine(T.badProject); break; }
+                printLine(T.opening(proj.title[lang]));
+                openProjectWindow(proj, $('.term-field', term));
+                break;
+            }
+            case 'contato': case 'contact':
+                printLine(`GitHub · <a href="${LINKS.github}" target="_blank" rel="noopener">github.com/EnzzoGomes</a><br>LinkedIn · <a href="${LINKS.linkedin}" target="_blank" rel="noopener">linkedin.com/in/enzzo-gomes</a><br>${lang === 'pt' ? 'Currículo' : 'Resume'} · <a href="${LINKS.cv}" target="_blank" rel="noopener">Google Drive (PDF)</a>`);
+                break;
+            case 'github': openLink(LINKS.github, 'GitHub'); break;
+            case 'linkedin': openLink(LINKS.linkedin, 'LinkedIn'); break;
+            case 'curriculo': case 'cv': case 'resume': openLink(LINKS.cv, lang === 'pt' ? 'currículo' : 'resume'); break;
+            case 'limpar': case 'clear': case 'cls':
+                $$('.term-line:not(.term-input)', term).forEach((l) => l.remove());
+                break;
+            case 'data': case 'date':
+                printLine(new Date().toLocaleString(lang === 'pt' ? 'pt-BR' : 'en-US'));
+                break;
+            case 'echo':
+                printLine(escapeHtml(raw.slice(5)));
+                break;
+            case 'oi': case 'ola': case 'hello': case 'hi':
+                printLine(T.hello);
+                break;
+            case 'sudo':
+                printLine(T.sudo);
+                break;
+            default:
+                printLine(T.notFound(escapeHtml(parts[0])));
+        }
+    }
 
     function renderTerminalStatic() {
         if (!term) return;
-        term.innerHTML = terminalScript[lang].map((s) => `
-<p class="term-line term-cmd"><span class="prompt">$</span> ${s.cmd}</p>
-<p class="term-line term-out">${s.out}</p>`).join('') + '<p class="term-line term-cmd"><span class="prompt">$</span> <span class="caret"></span></p>';
-        termState = 'done';
+        term.innerHTML = terminalScript[lang].map((st) => `
+<p class="term-line term-cmd">${cmdLine(st.cmd, st.note)}</p>
+<p class="term-line term-out">${st.out}</p>`).join('');
+        addInput();
     }
 
     function typeTerminal() {
@@ -843,7 +1014,7 @@ ${preview}
                 }
                 await wait(220);
                 if (!alive()) return;
-                $('.caret', cmd).remove();
+                cmd.innerHTML = cmdLine(step.cmd, step.note);
                 const out = document.createElement('p');
                 out.className = 'term-line term-out';
                 out.innerHTML = step.out;
@@ -852,15 +1023,17 @@ ${preview}
                 await wait(420);
             }
             if (!alive()) return;
-            const end = document.createElement('p');
-            end.className = 'term-line term-cmd';
-            end.innerHTML = '<span class="prompt">$</span> <span class="caret"></span>';
-            term.appendChild(end);
-            termState = 'done';
+            addInput();
         })();
     }
 
     if (term) {
+        term.addEventListener('click', (e) => {
+            if (e.target.closest('a')) return;
+            const field = $('.term-field', term);
+            if (field && !window.getSelection().toString()) field.focus({ preventScroll: true });
+        });
+
         if (reduceMotion || !hasGsap) {
             renderTerminalStatic();
         } else {
