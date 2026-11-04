@@ -9,7 +9,7 @@
 
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
-    const desktopMQ = window.matchMedia('(min-width: 761px) and (pointer: fine)');
+    const desktopMQ = window.matchMedia('(min-width: 961px) and (pointer: fine)');
 
     const hasGsap = typeof window.gsap !== 'undefined';
     if (hasGsap) {
@@ -61,7 +61,14 @@
             close: 'Fechar',
             maximize: 'Maximizar',
             file_about: 'sobre.txt',
-            file_cv: 'curriculo.pdf'
+            file_cv: 'curriculo.pdf',
+            tidy: 'organizar',
+            link_cv: 'Currículo',
+            link_cv_sub: 'PDF · Google Drive',
+            link_about: 'Sobre mim',
+            link_about_sub: 'formação e objetivos',
+            no_preview: 'prévia indisponível',
+            portfolio_folder: 'abrir projetos'
         },
         en: {
             page_title: 'Portfolio | Enzzo Gomes',
@@ -90,14 +97,23 @@
             close: 'Close',
             maximize: 'Maximize',
             file_about: 'about.txt',
-            file_cv: 'resume.pdf'
+            file_cv: 'resume.pdf',
+            tidy: 'tidy up',
+            link_cv: 'Resume',
+            link_cv_sub: 'PDF · Google Drive',
+            link_about: 'About me',
+            link_about_sub: 'education and goals',
+            no_preview: 'preview unavailable',
+            portfolio_folder: 'open projects'
         }
     };
+
+    const IMG = 'assets/images/projects/';
 
     const projects = [
         {
             id: 'ai-english-tutor',
-            pos: [0.02, 0.06],
+            pos: [0, 0],
             title: { pt: 'AI English Tutor', en: 'AI English Tutor' },
             type: { pt: 'IA / Educação', en: 'AI / Education' },
             desc: {
@@ -106,11 +122,12 @@
             },
             stack: ['Python', 'LLM', 'Hugging Face', 'TypeScript'],
             site: 'https://huggingface.co/spaces/Enzzozink/tutor-ingles-ia',
-            code: 'https://github.com/EnzzoGomes/ai-english-tutor'
+            code: 'https://github.com/EnzzoGomes/ai-english-tutor',
+            shots: []
         },
         {
             id: 'mercado-de-missoes',
-            pos: [0.98, 0.04],
+            pos: [1, 0],
             title: { pt: 'Mercado de Missões', en: 'Mission Market' },
             type: { pt: 'Web App / Gamificação', en: 'Web App / Gamification' },
             desc: {
@@ -119,37 +136,26 @@
             },
             stack: ['TypeScript', 'Vercel'],
             site: 'https://projeto-app-iota.vercel.app/',
-            code: 'https://github.com/EnzzoGomes/projeto-app'
-        },
-        {
-            id: 'estufa-trovao',
-            pos: [0.04, 0.46],
-            title: { pt: 'Estufa Trovão', en: 'Estufa Trovão' },
-            type: { pt: 'IoT / Dados', en: 'IoT / Data' },
-            desc: {
-                pt: 'Monitoramento de uma estufa com sensores IoT: leituras no ThingSpeak, banco MySQL, painel web em PHP e envio automático de médias de 15 minutos para o Power BI pelo GitHub Actions.',
-                en: 'Greenhouse monitoring with IoT sensors: readings on ThingSpeak, a MySQL database, a PHP web dashboard and 15-minute averages pushed automatically to Power BI through GitHub Actions.'
-            },
-            stack: ['Python', 'PHP', 'MySQL', 'ThingSpeak', 'Power BI', 'GitHub Actions'],
-            site: null,
-            code: 'https://github.com/EnzzoGomes/estufa-powerbi'
+            code: 'https://github.com/EnzzoGomes/projeto-app',
+            shots: [IMG + 'mercado-de-missoes.jpg']
         },
         {
             id: 'conecta-uniso',
-            pos: [0.96, 0.42],
+            pos: [2, 0],
             title: { pt: 'conecta.uniso', en: 'conecta.uniso' },
             type: { pt: 'Landing Page', en: 'Landing Page' },
             desc: {
-                pt: 'Landing page do projeto conecta.uniso — Conectando Jovens ao Futuro Digital — com estatísticas animadas, rolagem suave e animações de entrada.',
-                en: 'Landing page for conecta.uniso — Connecting Young People to the Digital Future — with animated stats, smooth scrolling and entrance animations.'
+                pt: 'Landing page do projeto de voluntariado conecta.uniso — Conectando Jovens ao Futuro Digital — com estatísticas animadas, rolagem suave e animações de entrada.',
+                en: 'Landing page for the conecta.uniso volunteering project — Connecting Young People to the Digital Future — with animated stats, smooth scrolling and entrance animations.'
             },
             stack: ['HTML', 'CSS', 'JavaScript'],
             site: 'https://unisoconecta.vercel.app',
-            code: 'https://github.com/EnzzoGomes/unisoconecta'
+            code: 'https://github.com/EnzzoGomes/unisoconecta',
+            shots: [IMG + 'conecta-uniso.jpg', IMG + 'conecta-uniso-2.jpg', IMG + 'conecta-uniso-3.jpg']
         },
         {
             id: 'area-do-aluno',
-            pos: [0.12, 0.86],
+            pos: [0, 1],
             title: { pt: 'conecta.uniso — Área do Aluno', en: 'conecta.uniso — Student Portal' },
             type: { pt: 'Web App', en: 'Web App' },
             desc: {
@@ -158,11 +164,54 @@
             },
             stack: ['HTML', 'CSS', 'JavaScript'],
             site: 'https://site-letramento.vercel.app',
-            code: 'https://github.com/EnzzoGomes/site-letramento'
+            code: 'https://github.com/EnzzoGomes/site-letramento',
+            shots: [IMG + 'area-do-aluno.jpg']
+        },
+        {
+            id: 'c2system',
+            pos: [1, 1],
+            title: { pt: 'C²SYSTEM', en: 'C²SYSTEM' },
+            type: { pt: 'SaaS / Gestão', en: 'SaaS / Management' },
+            desc: {
+                pt: 'Plataforma SaaS multiempresa para gestão de mídia exterior (OOH/DOOH): placas e painéis de LED, clientes, contratos, reservas bi-semanais, financeiro com fluxo de caixa, relatórios em Excel/CSV/PDF e importação inteligente de planilhas. Cada empresa tem seus dados isolados.',
+                en: 'Multi-tenant SaaS for out-of-home media management (OOH/DOOH): billboards and LED panels, clients, contracts, bi-weekly bookings, finance with cash flow, Excel/CSV/PDF reports and smart spreadsheet import. Each company’s data is fully isolated.'
+            },
+            stack: ['PHP 8', 'MySQL', 'PDO', 'JavaScript', 'InfinityFree'],
+            site: null,
+            code: null,
+            shots: [IMG + 'c-system-1.jpg', IMG + 'c-system-2.jpg', IMG + 'c-system-3.jpg', IMG + 'c-system-4.jpg', IMG + 'c-system-5.jpg']
+        },
+        {
+            id: 'estufa-powerbi',
+            pos: [2, 1],
+            title: { pt: 'Estufa — Power BI', en: 'Greenhouse — Power BI' },
+            type: { pt: 'Dados / BI', en: 'Data / BI' },
+            desc: {
+                pt: 'Painel de monitoramento da estufa com login. Os sensores enviam leituras ao ThingSpeak; o site em PHP grava médias de 15 minutos no MySQL e um script Python no GitHub Actions envia os dados para o Power BI Web.',
+                en: 'Greenhouse monitoring dashboard with sign-in. Sensors send readings to ThingSpeak; the PHP site stores 15-minute averages in MySQL and a Python script on GitHub Actions pushes the data to Power BI Web.'
+            },
+            stack: ['Python', 'PHP', 'MySQL', 'ThingSpeak', 'Power BI', 'GitHub Actions'],
+            site: 'https://estufa.freedev.app',
+            code: 'https://github.com/EnzzoGomes/estufa-powerbi',
+            shots: [IMG + 'estufa-powerbi-1.jpg', IMG + 'estufa-powerbi-2.jpg']
+        },
+        {
+            id: 'estufa-trovao',
+            pos: [0, 2],
+            title: { pt: 'Estufa Trovão', en: 'Estufa Trovão' },
+            type: { pt: 'IoT / Dados', en: 'IoT / Data' },
+            desc: {
+                pt: 'Sistema web da estufa com sensores IoT: área com login, gráficos em tempo real do ThingSpeak e tabela com as leituras dos sensores.',
+                en: 'Web system for an IoT greenhouse: signed-in area, real-time ThingSpeak charts and a table with the sensor readings.'
+            },
+            stack: ['PHP', 'MySQL', 'ThingSpeak', 'IoT'],
+            site: 'https://estufa-trovao.freedev.app',
+            code: null,
+            shots: [IMG + 'estufa-trovao-1.jpg']
         },
         {
             id: 'sites-profissionais',
-            pos: [0.88, 0.86],
+            pos: [1, 2],
             title: { pt: 'Sites Profissionais', en: 'Professional Websites' },
             type: { pt: 'Freelance', en: 'Freelance' },
             desc: {
@@ -170,16 +219,14 @@
                 en: 'My freelance services page: modern, fast websites built to turn visitors into customers.'
             },
             stack: ['HTML', 'CSS', 'JavaScript'],
-            site: 'https://vendas-blush.vercel.app',
-            code: 'https://github.com/EnzzoGomes/vendas'
+            site: 'https://vendasenzzogomes.vercel.app',
+            code: 'https://github.com/EnzzoGomes/vendas',
+            shots: [IMG + 'sites-profissionais.jpg', IMG + 'sites-profissionais-2.jpg', IMG + 'sites-profissionais-3.jpg']
         }
     ];
 
     const files = [
-        { id: 'about', kind: 'txt', labelKey: 'file_about', pos: [0.30, 1] },
-        { id: 'cv', kind: 'pdf', labelKey: 'file_cv', pos: [0.43, 1], href: LINKS.cv },
-        { id: 'github', kind: 'lnk', label: 'github.lnk', pos: [0.57, 1], href: LINKS.github },
-        { id: 'linkedin', kind: 'lnk', label: 'linkedin.lnk', pos: [0.70, 1], href: LINKS.linkedin }
+        { id: 'portfolio', kind: 'folder', label: 'portfolio', pos: [2, 2] }
     ];
 
     const techs = [
@@ -319,7 +366,7 @@
         const items = [...projects.map((p) => ({ ...p, kind: 'folder' })), ...files];
         iconsLayer.innerHTML = items.map((item) => `
 <button type="button" class="icon" data-id="${item.id}" data-kind="${item.kind}"
-    style="--x:${item.pos[0]};--y:${item.pos[1]}" data-cursor-label="drag"
+    style="--col:${item.pos[0]};--row:${item.pos[1]}" data-cursor-label="drag"
     aria-label="${item.title ? item.title[lang] : iconLabel(item)}">
   ${item.kind === 'folder' ? folderSVG() : fileSVG(item.kind)}
   <span class="icon__label">${iconLabel(item)}</span>
@@ -349,6 +396,12 @@
         const file = files.find((f) => f.id === id);
         if (!file) return;
         if (file.id === 'about') return openAboutWindow(el);
+        if (file.id === 'portfolio') {
+            const target = $('#projetos');
+            if (lenis) lenis.scrollTo(target, { duration: 1.2 });
+            else target.scrollIntoView({ behavior: 'smooth' });
+            return;
+        }
         if (file.href) window.open(file.href, '_blank', 'noopener');
     }
 
@@ -356,7 +409,7 @@
         if (!hasGsap || !window.Draggable || !desktopMQ.matches) return;
         draggables = $$('.icon', iconsLayer).map((el) => Draggable.create(el, {
             type: 'x,y',
-            bounds: iconsLayer,
+            bounds: desktop,
             inertia: !!window.InertiaPlugin && !reduceMotion,
             edgeResistance: 0.75,
             dragClickables: true,
@@ -407,6 +460,19 @@
     desktop && desktop.addEventListener('pointerdown', (e) => {
         if (!e.target.closest('.icon')) selectIcon(null);
     });
+
+    // Botão "organizar": devolve as pastas para a grade
+    const tidyBtn = $('#tidyIcons');
+    tidyBtn && tidyBtn.addEventListener('click', () => {
+        if (!hasGsap) return;
+        gsap.to($$('.icon', iconsLayer), {
+            x: 0, y: 0, duration: 0.7, ease: 'expo.out', stagger: 0.04,
+            onComplete() { draggables.forEach((d) => d.update()); }
+        });
+    });
+
+    // Atalho "Sobre mim"
+    $$('[data-open="about"]').forEach((b) => b.addEventListener('click', () => openAboutWindow(b)));
 
     // ------------------------------------------------------------------
     // GERENCIADOR DE JANELAS
@@ -526,6 +592,40 @@
         }
     }
 
+    function showShot(fig, index) {
+        const win = fig.closest('.window--float');
+        const p = win && projects.find((x) => `project:${x.id}` === win.dataset.key);
+        if (!p) return;
+        const total = p.shots.length;
+        const i = (index + total) % total;
+        fig.dataset.index = i;
+        const img = $('.pw__main', fig);
+        if (hasGsap && !reduceMotion) {
+            gsap.fromTo(img, { autoAlpha: 0.2 }, { autoAlpha: 1, duration: 0.35 });
+        }
+        img.src = p.shots[i];
+        $$('.pw__thumb', fig).forEach((b, k) => b.classList.toggle('is-active', k === i));
+        const count = $('.pw__count', fig);
+        if (count) count.textContent = `${i + 1} / ${total}`;
+    }
+
+    windowsLayer.addEventListener('click', (e) => {
+        const thumb = e.target.closest('[data-shot]');
+        const step = e.target.closest('[data-step]');
+        const fig = e.target.closest('.pw__shot');
+        if (!fig) return;
+        if (thumb) showShot(fig, +thumb.dataset.shot);
+        else if (step) showShot(fig, +fig.dataset.index + +step.dataset.step);
+    });
+
+    document.addEventListener('keydown', (e) => {
+        const activeWin = $('.window--float.is-active', windowsLayer);
+        const fig = activeWin && $('.pw__shot[data-total]', activeWin);
+        if (fig && (e.key === 'ArrowRight' || e.key === 'ArrowLeft')) {
+            showShot(fig, +fig.dataset.index + (e.key === 'ArrowRight' ? 1 : -1));
+        }
+    });
+
     document.addEventListener('keydown', (e) => {
         if (e.key !== 'Escape') return;
         const active = $('.window--float.is-active', windowsLayer);
@@ -537,7 +637,22 @@
             p.site ? `<a class="btn btn--neon btn--sm" data-magnetic href="${p.site}" target="_blank" rel="noopener">${t('open_site')} ↗</a>` : '',
             p.code ? `<a class="btn btn--sm" data-magnetic href="${p.code}" target="_blank" rel="noopener">${t('view_code')} ↗</a>` : ''
         ].join('');
+        const host = (p.site || '').replace(/^https?:\/\//, '').replace(/\/$/, '') || (lang === 'pt' ? 'versão de demonstração' : 'demo version');
+        const shots = p.shots || [];
+        let preview;
+        if (shots.length) {
+            const thumbs = shots.length > 1
+                ? `<div class="pw__thumbs">${shots.map((src, i) => `<button type="button" class="pw__thumb${i === 0 ? ' is-active' : ''}" data-shot="${i}" aria-label="Print ${i + 1}"><img src="${src}" alt="" loading="lazy"></button>`).join('')}</div>`
+                : '';
+            const nav = shots.length > 1
+                ? `<button type="button" class="pw__nav pw__nav--prev" data-step="-1" aria-label="Anterior">‹</button><button type="button" class="pw__nav pw__nav--next" data-step="1" aria-label="Próximo">›</button><span class="pw__count">1 / ${shots.length}</span>`
+                : '';
+            preview = `<figure class="pw__shot" data-index="0" data-total="${shots.length}"><div class="pw__shot-bar"><i></i><i></i><i></i><span>${host}</span></div><div class="pw__stage"><img class="pw__main" src="${shots[0]}" alt="${p.title[lang]}">${nav}</div>${thumbs}</figure>`;
+        } else {
+            preview = `<figure class="pw__shot pw__shot--empty">${folderSVG()}<span>${t('no_preview')}</span></figure>`;
+        }
         return `
+${preview}
 <p class="pw__cat">${p.type[lang]}</p>
 <h3 class="pw__title">${p.title[lang]}</h3>
 <p class="pw__desc">${p.desc[lang]}</p>
@@ -582,6 +697,39 @@
         if (countEl) countEl.textContent = `${projects.length} ${t('items')}`;
     }
     renderList();
+
+    // Prévia que segue o mouse ao passar pela lista
+    const peek = document.createElement('div');
+    peek.className = 'peek';
+    peek.setAttribute('aria-hidden', 'true');
+    document.body.appendChild(peek);
+
+    if (listEl && hasGsap && finePointer && !reduceMotion) {
+        const px = gsap.quickTo(peek, 'x', { duration: 0.5, ease: 'power3.out' });
+        const py = gsap.quickTo(peek, 'y', { duration: 0.5, ease: 'power3.out' });
+        let current = null;
+
+        listEl.addEventListener('pointermove', (e) => {
+            px(e.clientX + 24);
+            py(e.clientY - 90);
+            const row = e.target.closest('.explorer__row');
+            const p = row && projects.find((x) => x.id === row.dataset.id);
+            if (p && p.shots && p.shots.length) {
+                if (current !== p.id) {
+                    current = p.id;
+                    peek.style.backgroundImage = `url("${p.shots[0]}")`;
+                }
+                peek.classList.add('is-visible');
+            } else {
+                peek.classList.remove('is-visible');
+                current = null;
+            }
+        });
+        listEl.addEventListener('pointerleave', () => {
+            peek.classList.remove('is-visible');
+            current = null;
+        });
+    }
 
     listEl && listEl.addEventListener('click', (e) => {
         const row = e.target.closest('.explorer__row');
@@ -764,10 +912,10 @@
     if (hasGsap && !reduceMotion) {
         const heroTl = gsap.timeline({ defaults: { ease: 'expo.out' } });
         heroTl
-            .from('.hero__tag', { autoAlpha: 0, y: 12, duration: 0.8 })
-            .from('.hero__line', { yPercent: 40, autoAlpha: 0, duration: 1.1, stagger: 0.12 }, '<0.05')
+            .from('.hero__line', { yPercent: 40, autoAlpha: 0, duration: 1.1, stagger: 0.12 })
             .from('.hero__role, .hero__sub', { autoAlpha: 0, y: 14, duration: 0.8, stagger: 0.08 }, '-=0.7')
-            .from('.icon', { autoAlpha: 0, scale: 0.6, duration: 0.7, stagger: { each: 0.05, from: 'random' }, ease: 'back.out(1.7)', clearProps: 'scale' }, '-=0.6')
+            .from('.icon', { autoAlpha: 0, y: 16, duration: 0.6, stagger: 0.06, ease: 'power3.out', clearProps: 'y' }, '-=0.6')
+            .from('.widget', { autoAlpha: 0, x: 24, duration: 0.8 }, '<0.1')
             .from('.desktop__hint', { autoAlpha: 0, duration: 0.6 }, '-=0.3');
 
         $$('.reveal').forEach((el) => {
